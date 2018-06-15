@@ -16,6 +16,7 @@ const EventList = props => {
                 />
               )}
               {event.title}
+              {event.city_name}
             </a>
           </div>
         );

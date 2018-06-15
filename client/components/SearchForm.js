@@ -1,22 +1,22 @@
 import 'react-dates/initialize';
 import React, { Component } from 'react';
+import LocationSearch from './LocationSearch';
 import axios from 'axios';
 import EventList from './EventList';
 import { DateRangePicker } from 'react-dates';
-import { GeoForm } from './GeocoderGoogle';
-import Moment from 'react-moment';
 
 export class SearchForm extends Component {
   constructor() {
     super();
     this.state = {
-      location: '',
+      coordinates: [],
       startDate: null,
       endDate: null,
       events: {},
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.submitCoordinates = this.submitCoordinates.bind(this);
   }
 
   onChange(evt) {
@@ -25,10 +25,14 @@ export class SearchForm extends Component {
     });
   }
 
+  submitCoordinates(coordinates) {
+    this.setState({ coordinates });
+  }
+
   async onSubmit(evt) {
     evt.preventDefault();
     try {
-      const { location, startDate, endDate } = this.state;
+      const { coordinates, startDate, endDate } = this.state;
       let sDate = startDate
         .format()
         .slice(0, 10)
@@ -40,8 +44,11 @@ export class SearchForm extends Component {
         .split('-')
         .join('');
       let date = `${sDate}00-${eDate}00`;
+      // let lat = coordinates[0].toFixed(6);
+      // let lan = coordinates[1].toFixed(6);
+      // let location = `${lat},${lan}`;
+      let location = coordinates.join(',');
       const res = await axios.get(`/api/events/${location}/${date}`);
-      console.log('response', res);
       this.setState({
         events: res.data.events,
       });
@@ -56,15 +63,7 @@ export class SearchForm extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <GeoForm />
-          <input
-            className="form-control form-control-sm"
-            type="text"
-            name="location"
-            value={this.state.location}
-            onChange={this.onChange}
-            placeholder="where should we go.."
-          />
+          <LocationSearch updateCoordinates={this.submitCoordinates} />
           <DateRangePicker
             startDate={this.state.startDate} // momentPropTypes.momentObj or null,
             startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
@@ -76,25 +75,9 @@ export class SearchForm extends Component {
             focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
             onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
           />
-          {/* <input
-            className="form-control form-control-sm"
-            type="text"
-            name="startDate"
-            value={this.state.startDate}
-            onChange={this.onChange}
-            placeholder="where should we go.."
-          />{' '}
-          <input
-            className="form-control form-control-sm"
-            type="text"
-            name="endDate"
-            value={this.state.endDate}
-            onChange={this.onChange}
-            placeholder="where should we go.."
-          /> */}
           <button
             className="btn btn-primary btn-sm search-Button"
-            disabled={!this.state.location}
+            // disabled={!this.state.coodinates.length}
             type="submit"
           >
             Search

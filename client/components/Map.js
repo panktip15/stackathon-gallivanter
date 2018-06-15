@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import { accessToken } from './token';
-import Geocoder from './Geocoder';
 const MapBoxMap = ReactMapboxGl({ accessToken });
 
 export const Map = () => (
@@ -13,7 +12,6 @@ export const Map = () => (
       width: '65vw',
     }}
   >
-    <Geocoder />
     {/* <Layer type="symbol" id="someId" layout={{ 'icon-image': 'nature' }}>
       {monumentIds.map(k => (
         <Feature
