@@ -9,14 +9,19 @@ export const Map = () => (
     style="mapbox://styles/panktip85/cjieyr3ow2qst2rpe3bszy1tn"
     center={[-73.93, 40.73]}
     containerStyle={{
-      height: '100vh',
-      width: '100vw',
+      height: '65vh',
+      width: '65vw',
     }}
   >
     <Geocoder />
-    {/* {console.log(map)} */}
-    {/* <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-      <Feature coordinates={[40.73, -73.93]} />
+    {/* <Layer type="symbol" id="someId" layout={{ 'icon-image': 'nature' }}>
+      {monumentIds.map(k => (
+        <Feature
+          onClick={onMonumentClick.bind(null, k)}
+          coordinates={monuments[k].latlng}
+          key={k}
+        />
+      ))}
     </Layer> */}
   </MapBoxMap>
 );

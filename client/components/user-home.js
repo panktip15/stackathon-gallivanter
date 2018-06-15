@@ -12,11 +12,11 @@ export const UserHome = () => {
     <div>
       {/* <h3>Welcome, {email}</h3> */}
       <div className="row">
-        <div>
-          <SearchForm />
-        </div>
-        <div>
+        <div className="col-8">
           <Map />
+        </div>
+        <div className="col-4">
+          <SearchForm />
         </div>
       </div>
     </div>
