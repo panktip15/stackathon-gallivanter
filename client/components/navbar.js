@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom';
 import { logout } from '../store';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <h1>Gallivanter</h1>
+  <div className="container-fluid homePage">
+    <div className="row">
+      <img className="nav-icon" src="logo.png" />
+      <h1 className="h1">Gallivanter</h1>
+    </div>
     <nav>
       {isLoggedIn ? (
         <div>
