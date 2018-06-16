@@ -10,10 +10,12 @@ const EventList = props => {
           <li className="list-group-item" key={event.id}>
             <a href={event.url} className="row">
               {event.image && (
-                <img
-                  src={event.image.thumb.url}
-                  className="product-detail-image col-3"
-                />
+                <div className="col-3">
+                  <img
+                    src={event.image.thumb.url}
+                    className="product-detail-image"
+                  />
+                </div>
               )}
               <div className="col-8">{event.title}</div>
             </a>

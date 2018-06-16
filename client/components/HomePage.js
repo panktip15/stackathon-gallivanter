@@ -10,7 +10,7 @@ export class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      coordinates: {},
+      coordinates: [],
       startDate: null,
       endDate: null,
       events: {},
@@ -69,54 +69,64 @@ export class HomePage extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col-8">
-          <Map
-            events={this.state.events}
-            coordinates={this.state.coordinates}
-          />
-        </div>
-        <div className="col-4">
+      <div>
+        <div className="pl-4">
           <form onSubmit={this.onSubmit}>
-            <LocationSearch updateCoordinates={this.submitCoordinates} />
-            <DateRangePicker
-              startDate={this.state.startDate}
-              startDateId="your_unique_start_date_id"
-              endDate={this.state.endDate}
-              endDateId="your_unique_end_date_id"
-              onDatesChange={({ startDate, endDate }) =>
-                this.setState({ startDate, endDate })
-              }
-              focusedInput={this.state.focusedInput}
-              onFocusChange={focusedInput => this.setState({ focusedInput })}
-            />
-            {this.state.categories.category && (
-              <div>
-                <select
-                  className="form-control"
-                  onChange={this.onChange}
-                  name="category"
-                >
-                  <option value="">Category</option>
-                  {this.state.categories.category.map(choice => (
-                    <option value={choice.id} key={choice.id}>
-                      {choice.name}
-                    </option>
-                  ))}
-                </select>
+            <div className="row">
+              <div className="col-3">
+                <LocationSearch updateCoordinates={this.submitCoordinates} />
               </div>
-            )}
-            <button
-              className="btn btn-primary btn-sm search-Button"
-              // disabled={!this.state.coodinates.length}
-              type="submit"
-            >
-              Search
-            </button>
-            {this.state.events.event && (
-              <EventList events={this.state.events} />
-            )}
+              <div className="col-4">
+                <DateRangePicker
+                  startDate={this.state.startDate}
+                  startDateId="your_unique_start_date_id"
+                  endDate={this.state.endDate}
+                  endDateId="your_unique_end_date_id"
+                  onDatesChange={({ startDate, endDate }) =>
+                    this.setState({ startDate, endDate })
+                  }
+                  focusedInput={this.state.focusedInput}
+                  onFocusChange={focusedInput =>
+                    this.setState({ focusedInput })
+                  }
+                />
+              </div>
+              {this.state.categories.category && (
+                <div className="col-3">
+                  <select
+                    className="form-control"
+                    onChange={this.onChange}
+                    name="category"
+                  >
+                    <option value="">Category</option>
+                    {this.state.categories.category.map(choice => (
+                      <option value={choice.id} key={choice.id}>
+                        {choice.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              <div className="col-2">
+                <button type="submit">
+                  <img className="btn-light nav-icon" src="search.png" />
+                </button>
+              </div>
+            </div>
           </form>
+          <div className="row">
+            <div className="col-8 pt-4">
+              <Map
+                event={this.state.events.event}
+                coordinates={this.state.coordinates}
+              />
+            </div>
+            <div className="col-4">
+              {this.state.events.event && (
+                <EventList events={this.state.events} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );

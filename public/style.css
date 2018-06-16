@@ -1,5 +1,7 @@
+
 body {
   font-family: 'Fjalla One', sans-serif;
+
 }
 
 a {
@@ -9,6 +11,7 @@ a {
 label {
   display: block;
 }
+
 
 nav a {
   display: inline-block;
@@ -29,9 +32,10 @@ nav a {
   padding:30px;
 }
 
-.product-detail-image {
+/* .product-detail-image {
   height: 50px;
-}
+  width: 50px;
+} */
 .search-Button {
   background-color: #9aecdb;
   color: #185261;
