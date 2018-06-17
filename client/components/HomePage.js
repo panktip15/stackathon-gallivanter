@@ -16,11 +16,14 @@ export class HomePage extends Component {
       events: {},
       categories: [],
       category: {},
-      hoverItem: '',
+      hoveredItem: '',
+      zoom: [11],
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.submitCoordinates = this.submitCoordinates.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
   async componentDidMount() {
@@ -63,14 +66,29 @@ export class HomePage extends Component {
         events: res.data.events,
       });
     } catch (error) {
-      this.setState({
-        errorMessage: `There was a problem creating the todo: ${error.message}`,
-      });
+      console.error(error);
     }
   }
 
+  onMouseEnter(key) {
+    const selectedEvent = this.props.events.event.filter(e => e.id === key);
+    this.setState({
+      hoveredItem: selectedEvent,
+      center: [Number(selectedEvent.longitude), Number(selectedEvent.latitude)],
+      zoom: [14],
+    });
+  }
+
+  onMouseLeave() {
+    this.setState({
+      hoveredItem: '',
+      center: [Number(coordinates[1]), Number(coordinates[0])],
+      zoom: [11],
+    });
+  }
 
   render() {
+    const { hoveredItem, selectedEvent, zoom } = this.props;
     return (
       <div>
         <div className="pl-4">
@@ -122,6 +140,10 @@ export class HomePage extends Component {
               <Map
                 event={this.state.events && this.state.events.event}
                 coordinates={this.state.coordinates}
+                onMouseEnter={this.onMouseEnter}
+                onMouseLeave={this.onMouseLeave}
+                zoom={zoom}
+                selectedPin={selectedEvent}
               />
             </div>
             <div className="col-4">
@@ -131,8 +153,7 @@ export class HomePage extends Component {
                 )
               ) : (
                 <div className="alert alert-warning" role="alert">
-                  {' '}
-                  No events found{' '}
+                  No events found
                 </div>
               )}
             </div>

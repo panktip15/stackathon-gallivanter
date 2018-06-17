@@ -8,11 +8,13 @@ export const MapPopup = props => {
     container: {
       maxWidth: 200,
       minWidth: 120,
-      backgroundColor: '#394c5b',
+      backgroundColor: 'white',
       borderRadius: 5,
     },
     image: {
       margin: 'auto',
+      display: 'block',
+      borderRadius: 5,
     },
     footer: {
       backgroundColor: 'white',

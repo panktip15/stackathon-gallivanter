@@ -11,7 +11,9 @@ export class Map extends React.Component {
       center: [-73.93, 40.73],
       pinEvent: [],
       zoom: [11],
+      selectedPin: null,
     };
+    this.onPinCLick = this.onPinCLick.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -32,9 +34,18 @@ export class Map extends React.Component {
     return { ...prevState };
   }
 
+  onPinCLick(event) {
+    this.setState({
+      selectedPin: event,
+      center: [Number(event.longitude), Number(event.latitude)]
+    });
+    setTimeout(() => {
+      this.setState({ selectedPin: null });
+    }, 5000);
+  }
+
   render() {
     const { pinEvent } = this.state;
-    const { event, coordinates } = this.props;
     return (
       <MapBoxMap
         style="mapbox://styles/panktip85/cjieyr3ow2qst2rpe3bszy1tn"
@@ -45,7 +56,7 @@ export class Map extends React.Component {
           width: '65vw',
         }}
       >
-        {event && <MapPopup event={event[0]} />}
+        {this.state.selectedPin && <MapPopup event={this.state.selectedPin} />}
         <Layer
           type="symbol"
           layout={{
@@ -59,6 +70,7 @@ export class Map extends React.Component {
               <Feature
                 coordinates={[Number(evt.longitude), Number(evt.latitude)]}
                 key={evt.id}
+                onClick={this.onPinCLick.bind(null, evt)}
               />
             ))}
         </Layer>
