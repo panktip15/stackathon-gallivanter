@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Popup } from 'react-mapbox-gl';
 import { accessToken } from './token';
+import { MapPopup } from './MapPopup';
 const MapBoxMap = ReactMapboxGl({ accessToken });
 
 export class Map extends React.Component {
@@ -15,9 +16,7 @@ export class Map extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { coordinates, event } = nextProps;
-    console.log(event);
     if (event) {
-      console.log('derived state from props', event);
       return {
         ...prevState,
         pinEvent: event,
@@ -35,7 +34,7 @@ export class Map extends React.Component {
 
   render() {
     const { pinEvent } = this.state;
-    console.log('states', this.state);
+    const { event, coordinates } = this.props;
     return (
       <MapBoxMap
         style="mapbox://styles/panktip85/cjieyr3ow2qst2rpe3bszy1tn"
@@ -46,11 +45,18 @@ export class Map extends React.Component {
           width: '65vw',
         }}
       >
-        <Layer type="symbol" layout={{ 'icon-image': 'marker-15' }}>
+        {event && <MapPopup event={event[0]} />}
+        <Layer
+          type="symbol"
+          layout={{
+            'icon-image': 'marker-15',
+            'icon-allow-overlap': true,
+            'icon-size': 2,
+          }}
+        >
           {pinEvent &&
             pinEvent.map(evt => (
               <Feature
-                // onClick={this.handleUpdatePin.bind(this, pin)}
                 coordinates={[Number(evt.longitude), Number(evt.latitude)]}
                 key={evt.id}
               />

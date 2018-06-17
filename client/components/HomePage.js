@@ -16,6 +16,7 @@ export class HomePage extends Component {
       events: {},
       categories: [],
       category: {},
+      hoverItem: '',
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -38,6 +39,7 @@ export class HomePage extends Component {
   submitCoordinates(coordinates) {
     this.setState({ coordinates });
   }
+
   async onSubmit(evt) {
     evt.preventDefault();
     try {
@@ -66,6 +68,7 @@ export class HomePage extends Component {
       });
     }
   }
+
 
   render() {
     return (
@@ -117,13 +120,20 @@ export class HomePage extends Component {
           <div className="row">
             <div className="col-8 pt-4">
               <Map
-                event={this.state.events.event}
+                event={this.state.events && this.state.events.event}
                 coordinates={this.state.coordinates}
               />
             </div>
             <div className="col-4">
-              {this.state.events.event && (
-                <EventList events={this.state.events} />
+              {this.state.events ? (
+                this.state.events.event && (
+                  <EventList events={this.state.events} />
+                )
+              ) : (
+                <div className="alert alert-warning" role="alert">
+                  {' '}
+                  No events found{' '}
+                </div>
               )}
             </div>
           </div>
