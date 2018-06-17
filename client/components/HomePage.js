@@ -62,8 +62,13 @@ export class HomePage extends Component {
       const res = await axios.get(
         `/api/events/${location}/${date}/${category}`
       );
+      let eventData = res.data.events.event;
+      eventData = eventData.filter(
+        (event, index, self) =>
+          index === self.findIndex(e => e.title === event.title)
+      );
       this.setState({
-        events: res.data.events,
+        events: { event: eventData },
       });
     } catch (error) {
       console.error(error);
@@ -88,12 +93,13 @@ export class HomePage extends Component {
   }
 
   render() {
+    console.log(this.state.events);
     const { hoveredItem, selectedEvent, zoom } = this.props;
     return (
       <div>
         <div className="pl-4">
           <form onSubmit={this.onSubmit}>
-            <div className="row">
+            <div className="row pb-4">
               <div className="col-3">
                 <LocationSearch updateCoordinates={this.submitCoordinates} />
               </div>
@@ -130,13 +136,16 @@ export class HomePage extends Component {
               )}
               <div className="col-2">
                 <button type="submit">
-                  <img className="btn-light nav-icon" src="search.png" />
+                  <img
+                    className="nav-icon search-Button"
+                    src="search.png"
+                  />
                 </button>
               </div>
             </div>
           </form>
           <div className="row">
-            <div className="col-8 pt-4">
+            <div className="col-8">
               <Map
                 event={this.state.events && this.state.events.event}
                 coordinates={this.state.coordinates}
@@ -146,7 +155,7 @@ export class HomePage extends Component {
                 selectedPin={selectedEvent}
               />
             </div>
-            <div className="col-4">
+            <div className="col-4 pr-4 eventList">
               {this.state.events ? (
                 this.state.events.event && (
                   <EventList events={this.state.events} />

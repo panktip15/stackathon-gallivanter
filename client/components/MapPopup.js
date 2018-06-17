@@ -8,7 +8,6 @@ export const MapPopup = props => {
     container: {
       maxWidth: 200,
       minWidth: 120,
-      backgroundColor: 'white',
       borderRadius: 5,
     },
     image: {
@@ -17,8 +16,8 @@ export const MapPopup = props => {
       borderRadius: 5,
     },
     footer: {
-      backgroundColor: 'white',
       padding: '8px 12px',
+      fontFamily: 'Fjalla One',
     },
   });
   return (
@@ -28,12 +27,11 @@ export const MapPopup = props => {
       offset={[0, -15]}
     >
       <div className={css(styles.container)}>
-        {event.image.medium && (
+        {event.image && (
           <img className={css(styles.image)} src={event.image.medium.url} />
         )}
         <div className={css(styles.footer)}>
           <h1 style={{ fontSize: 15 }}>{event.title}</h1>
-          <a>{event.start_time}</a>
         </div>
       </div>
     </Popup>

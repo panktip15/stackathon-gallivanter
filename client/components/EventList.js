@@ -1,7 +1,9 @@
 import React from 'react';
+import moment from 'moment';
 
 const EventList = props => {
   const { events } = props;
+  const eventDate = moment(event.start_time).format('LLL');
   return (
     <ul className="list-group">
       {events.event.map(event => {
@@ -16,7 +18,10 @@ const EventList = props => {
                   />
                 </div>
               )}
-              <div className="col-8">{event.title}</div>
+              <div className="col-8">
+                <div>{event.title}</div>
+                <div className="text-muted">{eventDate}</div>
+              </div>
             </a>
           </li>
         );

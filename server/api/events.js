@@ -8,7 +8,7 @@ router.get('/:location/:date/:category', async (req, res, next) => {
       process.env.EVENTFUL_APP_KEY
     }&where=${req.params.location}&within=20&date=${req.params.date}&category=${
       req.params.category
-    }&sort_order=popularity&page_size=15&page_number=1`
+    }&sort_order=popularity&page_size=15`
   );
   res.json(data);
 });

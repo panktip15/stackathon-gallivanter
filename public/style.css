@@ -1,10 +1,14 @@
 
 body {
-  font-family: 'Fjalla One', sans-serif;
+  font-family: 'Fjalla One';
 
 }
 
 a {
+  text-decoration: none;
+}
+
+a:link {
   text-decoration: none;
 }
 
@@ -22,6 +26,14 @@ nav a {
   height: 40px;
 }
 
+.list-group-item {
+  font-family: 'Fjalla One';
+  color: #484848
+}
+
+.list-group-item:hover {
+  background-color: #b7c1c2;
+}
 
 #map {
   height: 100vh;
@@ -32,22 +44,15 @@ nav a {
   padding:30px;
 }
 
-/* .product-detail-image {
-  height: 50px;
-  width: 50px;
-} */
-.search-Button {
-  background-color: #9aecdb;
-  color: #185261;
-  border: none;
-  margin: 25px;
-  border-radius: 12px;
+.eventList{
+  max-height:70vh;
+  overflow-y:scroll;
+  border: #007a87;
 }
+.search-Button { transition: all .2s ease-in-out; }
 
 .search-Button:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  background-color: #58b19f;
+  transform: scale(1.4);
 }
 .search-Button:disabled {
   background-color: #cad3c8;

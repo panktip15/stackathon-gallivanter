@@ -37,7 +37,7 @@ export class Map extends React.Component {
   onPinCLick(event) {
     this.setState({
       selectedPin: event,
-      center: [Number(event.longitude), Number(event.latitude)]
+      center: [Number(event.longitude), Number(event.latitude)],
     });
     setTimeout(() => {
       this.setState({ selectedPin: null });
@@ -52,7 +52,7 @@ export class Map extends React.Component {
         center={this.state.center}
         zoom={this.state.zoom}
         containerStyle={{
-          height: '65vh',
+          height: '70vh',
           width: '65vw',
         }}
       >
