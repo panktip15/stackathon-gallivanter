@@ -98,10 +98,10 @@ export class HomePage extends Component {
         <div className="pl-4">
           <form onSubmit={this.onSubmit}>
             <div className="row pb-4">
-              <div className="col-3">
+              <div className="col-sm-3">
                 <LocationSearch updateCoordinates={this.submitCoordinates} />
               </div>
-              <div className="col-4">
+              <div className="col-sm-4">
                 <DateRangePicker
                   startDate={this.state.startDate}
                   startDateId="your_unique_start_date_id"
@@ -117,7 +117,7 @@ export class HomePage extends Component {
                 />
               </div>
               {this.state.categories.category && (
-                <div className="col-3">
+                <div className="col-sm-3">
                   <select
                     className="form-control"
                     onChange={this.onChange}
@@ -132,7 +132,7 @@ export class HomePage extends Component {
                   </select>
                 </div>
               )}
-              <div className="col-2">
+              <div className="col-sm-2">
                 <button type="submit">
                   <img className="nav-icon search-Button" src="search.png" />
                 </button>
@@ -140,13 +140,13 @@ export class HomePage extends Component {
             </div>
           </form>
           <div className="row">
-            <div className="col-8">
+            <div className="col-sm-8">
               <Map
                 event={this.state.events && this.state.events.event}
                 coordinates={this.state.coordinates}
               />
             </div>
-            <div className="col-4 pr-4 eventList">
+            <div className="col-sm-4 pr-4-lg eventList">
               {this.state.events ? (
                 this.state.events.event && (
                   <EventList

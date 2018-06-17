@@ -10,7 +10,7 @@ export class Map extends React.Component {
     this.state = {
       center: [-73.93, 40.73],
       pinEvent: [],
-      zoom: [12],
+      zoom: [11],
       selectedPin: null,
     };
     this.onPinCLick = this.onPinCLick.bind(this);
@@ -22,7 +22,7 @@ export class Map extends React.Component {
       return {
         ...prevState,
         pinEvent: event,
-        zoom: [14],
+        zoom: [12],
       };
     }
     if (coordinates.length) {
@@ -54,7 +54,7 @@ export class Map extends React.Component {
         zoom={this.state.zoom}
         containerStyle={{
           height: '70vh',
-          width: '65vw',
+          width: '90vw',
         }}
       >
         {this.state.selectedPin && <MapPopup event={this.state.selectedPin} />}
