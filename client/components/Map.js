@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMapboxGl, { Layer, Feature, Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import { accessToken } from './token';
 import { MapPopup } from './MapPopup';
 const MapBoxMap = ReactMapboxGl({ accessToken });
@@ -10,7 +10,7 @@ export class Map extends React.Component {
     this.state = {
       center: [-73.93, 40.73],
       pinEvent: [],
-      zoom: [11],
+      zoom: [12],
       selectedPin: null,
     };
     this.onPinCLick = this.onPinCLick.bind(this);
@@ -22,6 +22,7 @@ export class Map extends React.Component {
       return {
         ...prevState,
         pinEvent: event,
+        zoom: [14],
       };
     }
     if (coordinates.length) {

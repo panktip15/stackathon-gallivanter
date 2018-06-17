@@ -18,6 +18,7 @@ export class HomePage extends Component {
       category: {},
       hoveredItem: '',
       zoom: [11],
+      center: [],
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -87,14 +88,11 @@ export class HomePage extends Component {
   onMouseLeave() {
     this.setState({
       hoveredItem: '',
-      center: [Number(coordinates[1]), Number(coordinates[0])],
       zoom: [11],
     });
   }
 
   render() {
-    console.log(this.state.events);
-    const { hoveredItem, selectedEvent, zoom } = this.props;
     return (
       <div>
         <div className="pl-4">
@@ -136,10 +134,7 @@ export class HomePage extends Component {
               )}
               <div className="col-2">
                 <button type="submit">
-                  <img
-                    className="nav-icon search-Button"
-                    src="search.png"
-                  />
+                  <img className="nav-icon search-Button" src="search.png" />
                 </button>
               </div>
             </div>
@@ -149,16 +144,17 @@ export class HomePage extends Component {
               <Map
                 event={this.state.events && this.state.events.event}
                 coordinates={this.state.coordinates}
-                onMouseEnter={this.onMouseEnter}
-                onMouseLeave={this.onMouseLeave}
-                zoom={zoom}
-                selectedPin={selectedEvent}
               />
             </div>
             <div className="col-4 pr-4 eventList">
               {this.state.events ? (
                 this.state.events.event && (
-                  <EventList events={this.state.events} />
+                  <EventList
+                    onMouseEnter={this.onMouseEnter}
+                    onMouseLeave={this.onMouseLeave}
+                    {...this.state}
+                    {...this.props}
+                  />
                 )
               ) : (
                 <div className="alert alert-warning" role="alert">
