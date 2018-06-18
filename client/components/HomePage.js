@@ -16,16 +16,18 @@ export class HomePage extends Component {
       events: {},
       categories: [],
       category: {},
-      hoveredItem: '',
       zoom: [11],
       center: [],
+      hoverItem: null,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.submitCoordinates = this.submitCoordinates.bind(this);
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
+
+  /*-------------------- EVENT HANDLERS ---------------------*/
 
   async componentDidMount() {
     const { data } = await axios.get('/api/events/categories');
@@ -76,21 +78,19 @@ export class HomePage extends Component {
     }
   }
 
-  onMouseEnter(key) {
-    const selectedEvent = this.props.events.event.filter(e => e.id === key);
+  handleMouseEnter(event) {
     this.setState({
-      hoveredItem: selectedEvent,
-      center: [Number(selectedEvent.longitude), Number(selectedEvent.latitude)],
-      zoom: [14],
+      hoverItem: event,
     });
   }
 
-  onMouseLeave() {
+  handleMouseLeave() {
     this.setState({
-      hoveredItem: '',
-      zoom: [11],
+      hoverItem: null,
     });
   }
+
+  /*-------------------- RENDER ---------------------*/
 
   render() {
     return (
@@ -101,6 +101,7 @@ export class HomePage extends Component {
               <div className="col-sm-3">
                 <LocationSearch updateCoordinates={this.submitCoordinates} />
               </div>
+              {/*------------------- DATE PICKER ------------------*/}
               <div className="col-sm-4">
                 <DateRangePicker
                   startDate={this.state.startDate}
@@ -116,6 +117,7 @@ export class HomePage extends Component {
                   }
                 />
               </div>
+              {/*------------------- CATEGORY SELECTOR ------------------*/}
               {this.state.categories.category && (
                 <div className="col-sm-3">
                   <select
@@ -133,6 +135,7 @@ export class HomePage extends Component {
                 </div>
               )}
               <div className="col-sm-2">
+                {/*------------------- SEARCH BUTTON ------------------*/}
                 <button type="submit">
                   <img className="nav-icon search-Button" src="search.png" />
                 </button>
@@ -143,18 +146,33 @@ export class HomePage extends Component {
             <div className="col-sm-8">
               <Map
                 event={this.state.events && this.state.events.event}
+                {...this.props}
+                {...this.state}
                 coordinates={this.state.coordinates}
+                selectedPin={this.selectedPin}
               />
             </div>
+            {/*------------------- EVENT LIST ------------------*/}
             <div className="col-sm-4 pr-4-lg eventList">
               {this.state.events ? (
                 this.state.events.event && (
-                  <EventList
-                    onMouseEnter={this.onMouseEnter}
-                    onMouseLeave={this.onMouseLeave}
-                    {...this.state}
-                    {...this.props}
-                  />
+                  <ul className="list-group">
+                    {this.state.events.event.map(event => {
+                      return (
+                        <div key={event.id}>
+                          <EventList
+                            {...this.state}
+                            {...this.props}
+                            handleMouseEnter={() =>
+                              this.handleMouseEnter(event)
+                            }
+                            handleMouseLeave={() => this.handleMouseLeave()}
+                            event={event}
+                          />
+                        </div>
+                      );
+                    })}
+                  </ul>
                 )
               ) : (
                 <div className="alert alert-warning" role="alert">

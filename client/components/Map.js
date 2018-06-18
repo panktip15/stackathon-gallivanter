@@ -17,7 +17,15 @@ export class Map extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { coordinates, event } = nextProps;
+    const { coordinates, event, hoverItem } = nextProps;
+    if (hoverItem) {
+      return {
+        ...prevState,
+        selectedPin: hoverItem,
+        center: [Number(hoverItem.longitude), Number(hoverItem.latitude)],
+        zoom: [14],
+      };
+    }
     if (event) {
       return {
         ...prevState,
