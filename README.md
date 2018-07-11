@@ -7,6 +7,7 @@ Check out the deployed application: https://gallivanter.herokuapp.com/home
 ### Getting Started
 First thing's first!
 
-1. Fork and clone this repo!
-2.`npm install`
+-Fork and clone this repo!
+
+-`npm install`
 
